@@ -5,7 +5,9 @@ const  User  = require('../model/userModel')
 const { use } = require('express/lib/application')
 const { off } = require('../model/userModel')
 
-
+// @desc Register new user
+// @router POST /api/users
+// @access Public
 const registerUser = asyncHandler(async (req,res) => {
     const { name, email, password } = req.body
 
@@ -43,6 +45,9 @@ const registerUser = asyncHandler(async (req,res) => {
     
 })
 
+//@desc Authenticate a user
+//@route POST /api/users/login
+//@access Public
 const loginUser = asyncHandler(async (req,res) => {
     const {email, password} = req.body
     
@@ -67,6 +72,9 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d'})
 }
 
+//@desc Get user Data
+//@route GET /api/users/me
+//@access Public
 const getMe = asyncHandler(async (req,res) => {
     const user = await User.find()
     res.json(user)
